@@ -298,6 +298,13 @@ inspect = function(request) {
             data <- add_new_section(data, 'Printed form', print_data)
             data <- add_new_section(data, 'Help document', help_data)
         }
+
+        if ('python.builtin.function' %in% class(obj))
+            data <- tryCatch({
+                help_obj = py_capture_output(import_builtins()$help(obj))
+                list(`text/plain` = help_obj)
+            }, error = function(e) NULL) 
+        
     }
     found <- length(data) != 0
     send_response('inspect_reply', request, 'shell', list(
