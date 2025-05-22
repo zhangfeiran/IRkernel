@@ -299,7 +299,7 @@ inspect = function(request) {
             data <- add_new_section(data, 'Help document', help_data)
         }
 
-        if ('python.builtin.function' %in% class(obj))
+        if ('python.builtin.object' %in% class(obj))
             data <- tryCatch({
                 help_obj = py_capture_output(import_builtins()$help(obj))
                 list(`text/plain` = help_obj)
